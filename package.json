@@ -1,0 +1,16 @@
+{
+  "name": "ui-customizer",
+  "version": "1.0.0",
+  "description": "App desktop para personalizar UI en tiempo real",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "keywords": ["electron", "customizer", "ui"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "latest"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "appName": "UI Customizer",
+  "bgColor": "#ffffff",
+  "textColor": "#3300ff",
+  "accentColor": "#ff0000",
+  "fontSize": 20,
+  "borderRadius": 9,
+  "iconPath": "📎",
+  "iconImage": null,
+  "emojiIngresos": "💰",
+  "emojiOrdenes": "📦",
+  "emojiClientes": "👥",
+  "emojiCrecimiento": "📈",
+  "chartColor": "#8000ff",
+  "barColor": "#5a5997",
+  "statusCompletedColor": "#00ff55",
+  "statusPendingColor": "#ffc107",
+  "statusProcessingColor": "#00bfff"
+}

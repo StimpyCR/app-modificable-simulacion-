@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Customizer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Vista Dashboard -->
+  <div id="dashboardView" class="view active">
+    <div class="dashboard-container">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div class="header-left">
+          <span class="dashboard-icon" id="dashboardIcon">📊</span>
+          <h1 id="dashboardTitle">Ventas Dashboard</h1>
+        </div>
+        <button id="settingsBtn" class="btn-settings">⚙️ Configuración</button>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <p class="stat-label">Ingresos Totales</p>
+            <p class="stat-value">$45,250</p>
+            <p class="stat-change positive">↑ 12.5%</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-content">
+            <p class="stat-label">Órdenes</p>
+            <p class="stat-value">1,284</p>
+            <p class="stat-change positive">↑ 8.3%</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-content">
+            <p class="stat-label">Clientes</p>
+            <p class="stat-value">892</p>
+            <p class="stat-change positive">↑ 5.2%</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-content">
+            <p class="stat-label">Crecimiento</p>
+            <p class="stat-value">23.8%</p>
+            <p class="stat-change negative">↓ 2.1%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>Ventas por Mes</h3>
+          <div class="chart-placeholder">
+            <svg viewBox="0 0 300 150" class="mini-chart">
+              <polyline points="10,100 50,60 90,80 130,40 170,50 210,20 250,35 290,15"
+                        style="fill:none;stroke:currentColor;stroke-width:2"/>
+              <circle cx="10" cy="100" r="3" style="fill:currentColor"/>
+              <circle cx="50" cy="60" r="3" style="fill:currentColor"/>
+              <circle cx="90" cy="80" r="3" style="fill:currentColor"/>
+              <circle cx="130" cy="40" r="3" style="fill:currentColor"/>
+              <circle cx="170" cy="50" r="3" style="fill:currentColor"/>
+              <circle cx="210" cy="20" r="3" style="fill:currentColor"/>
+              <circle cx="250" cy="35" r="3" style="fill:currentColor"/>
+              <circle cx="290" cy="15" r="3" style="fill:currentColor"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Categorías Populares</h3>
+          <div class="category-list">
+            <div class="category-item">
+              <span class="category-name">Electrónica</span>
+              <div class="category-bar">
+                <div class="category-fill" style="width: 75%"></div>
+              </div>
+              <span class="category-percent">75%</span>
+            </div>
+            <div class="category-item">
+              <span class="category-name">Ropa</span>
+              <div class="category-bar">
+                <div class="category-fill" style="width: 60%"></div>
+              </div>
+              <span class="category-percent">60%</span>
+            </div>
+            <div class="category-item">
+              <span class="category-name">Accesorios</span>
+              <div class="category-bar">
+                <div class="category-fill" style="width: 45%"></div>
+              </div>
+              <span class="category-percent">45%</span>
+            </div>
+            <div class="category-item">
+              <span class="category-name">Hogar</span>
+              <div class="category-bar">
+                <div class="category-fill" style="width: 55%"></div>
+              </div>
+              <span class="category-percent">55%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="recent-orders">
+        <h3>Órdenes Recientes</h3>
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>ID Orden</th>
+              <th>Cliente</th>
+              <th>Monto</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#ORD-2024-001</td>
+              <td>Juan Pérez</td>
+              <td>$1,250</td>
+              <td><span class="status completed">✓ Completada</span></td>
+            </tr>
+            <tr>
+              <td>#ORD-2024-002</td>
+              <td>María García</td>
+              <td>$2,100</td>
+              <td><span class="status pending">⏳ Pendiente</span></td>
+            </tr>
+            <tr>
+              <td>#ORD-2024-003</td>
+              <td>Carlos López</td>
+              <td>$890</td>
+              <td><span class="status completed">✓ Completada</span></td>
+            </tr>
+            <tr>
+              <td>#ORD-2024-004</td>
+              <td>Ana Martínez</td>
+              <td>$3,450</td>
+              <td><span class="status processing">⚙️ Procesando</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vista Configuración -->
+  <div id="settingsView" class="view">
+    <div class="settings-container">
+      <!-- Header con botón atrás -->
+      <div class="settings-header">
+        <button id="backBtn" class="btn-back">← Volver al Dashboard</button>
+        <h1>⚙️ Configuración</h1>
+      </div>
+
+      <div class="settings-content">
+        <!-- Panel de Control -->
+        <div class="control-panel">
+          <div class="section">
+            <h3>Información de la App</h3>
+            <div class="input-group">
+              <label>Nombre de la App:</label>
+              <input type="text" id="appName" placeholder="Nombre de la aplicación">
+            </div>
+            <div class="input-group">
+              <label>Emoji/Icono:</label>
+              <input type="text" id="iconPath" placeholder="📎" maxlength="2">
+              <small>Escribe un emoji o símbolo</small>
+            </div>
+            <div class="input-group">
+              <label>O Selecciona una Imagen:</label>
+              <input type="file" id="iconImage" accept=".jpg,.jpeg,.png,.ico">
+              <small>Formatos: JPG, PNG, ICO</small>
+              <div id="iconPreview" class="icon-preview"></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Colores</h3>
+            <div class="input-group">
+              <label>Color de Fondo:</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="bgColor">
+                <input type="text" id="bgColorText" placeholder="#1a1a1a" class="color-text">
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Color de Texto:</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="textColor">
+                <input type="text" id="textColorText" placeholder="#ffffff" class="color-text">
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Color de Acento:</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="accentColor">
+                <input type="text" id="accentColorText" placeholder="#00bfff" class="color-text">
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Estilos</h3>
+            <div class="input-group">
+              <label>Tamaño de Fuente (px):</label>
+              <input type="range" id="fontSize" min="12" max="24" value="16">
+              <span id="fontSizeDisplay">16px</span>
+            </div>
+            <div class="input-group">
+              <label>Radio de Borde (px):</label>
+              <input type="range" id="borderRadius" min="0" max="20" value="8">
+              <span id="borderRadiusDisplay">8px</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Personalización del Dashboard</h3>
+
+            <div class="input-group">
+              <label>Emojis de Estadísticas</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                  <label style="font-size: 12px; color: #999;">Ingresos</label>
+                  <input type="text" id="emojiIngresos" placeholder="💰" maxlength="2" style="font-size: 16px;">
+                </div>
+                <div>
+                  <label style="font-size: 12px; color: #999;">Órdenes</label>
+                  <input type="text" id="emojiOrdenes" placeholder="📦" maxlength="2" style="font-size: 16px;">
+                </div>
+                <div>
+                  <label style="font-size: 12px; color: #999;">Clientes</label>
+                  <input type="text" id="emojiClientes" placeholder="👥" maxlength="2" style="font-size: 16px;">
+                </div>
+                <div>
+                  <label style="font-size: 12px; color: #999;">Crecimiento</label>
+                  <input type="text" id="emojiCrecimiento" placeholder="📈" maxlength="2" style="font-size: 16px;">
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Color de la Gráfica:</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="chartColor">
+                <input type="text" id="chartColorText" placeholder="#00bfff" class="color-text">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Color de Barras (Categorías):</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="barColor">
+                <input type="text" id="barColorText" placeholder="#4ade80" class="color-text">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Color Status "Completada":</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="statusCompletedColor">
+                <input type="text" id="statusCompletedColorText" placeholder="#4ade80" class="color-text">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Color Status "Pendiente":</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="statusPendingColor">
+                <input type="text" id="statusPendingColorText" placeholder="#ffc107" class="color-text">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Color Status "Procesando":</label>
+              <div class="color-input-wrapper">
+                <input type="color" id="statusProcessingColor">
+                <input type="text" id="statusProcessingColorText" placeholder="#00bfff" class="color-text">
+              </div>
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button id="resetBtn" class="btn-reset">🔄 Restablecer</button>
+            <button id="exportBtn" class="btn-export">💾 Exportar Config</button>
+          </div>
+        </div>
+
+        <!-- Preview de la App -->
+        <div class="preview-section">
+          <h2>👁️ Vista Previa</h2>
+          <div class="app-preview" id="appPreview">
+            <header>
+              <span class="app-icon"></span>
+              <h1></h1>
+            </header>
+            <main>
+              <div class="card">
+                <h3>Cambios en Tiempo Real</h3>
+                <p>Todos los cambios que hagas en el panel de control se reflejan aquí instantáneamente.</p>
+              </div>
+              <div class="card">
+                <h3>Personalización Completa</h3>
+                <p>Puedes cambiar colores, tamaños de fuente, bordes y más sin necesidad de reiniciar.</p>
+              </div>
+              <div class="card">
+                <h3>Guarda tu Config</h3>
+                <p>Todos los cambios se guardan automáticamente en el archivo config.json</p>
+              </div>
+            </main>
+          </div>
+
+          <!-- Panel de Info de Configuración -->
+          <div class="config-info">
+            <h3>📋 Configuración Actual</h3>
+            <pre id="configDisplay"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
