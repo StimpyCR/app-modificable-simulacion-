@@ -9,3 +9,4 @@ yarn-error.log*
 .electron/
 .env.local
 .env.*.local
+config.json
