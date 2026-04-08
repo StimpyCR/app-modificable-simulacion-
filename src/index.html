@@ -169,6 +169,29 @@
         <!-- Panel de Control -->
         <div class="control-panel">
           <div class="section">
+            <h3>Temas Preestablecidos</h3>
+            <div class="theme-buttons">
+              <button class="btn-theme active" data-theme="dark" title="Tema Oscuro">🌙 Dark</button>
+              <button class="btn-theme" data-theme="light" title="Tema Claro">☀️ Light</button>
+              <button class="btn-theme" data-theme="corporate" title="Tema Corporativo">💼 Corporate</button>
+              <button class="btn-theme" data-theme="modern" title="Tema Moderno">🚀 Modern</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Control de Cambios</h3>
+            <div class="history-buttons">
+              <button id="undoBtn" class="btn-history" disabled>↶ Deshacer</button>
+              <button id="redoBtn" class="btn-history" disabled>↷ Rehacer</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Validación de Accesibilidad</h3>
+            <div id="contrastBadge" class="contrast-badge" style="display: none;"></div>
+          </div>
+
+          <div class="section">
             <h3>Información de la App</h3>
             <div class="input-group">
               <label>Nombre de la App:</label>
@@ -294,6 +317,7 @@
 
           <div class="button-group">
             <button id="resetBtn" class="btn-reset">🔄 Restablecer</button>
+            <button id="compareBtn" class="btn-compare">🔄 Comparar</button>
             <button id="exportBtn" class="btn-export">💾 Exportar Config</button>
           </div>
         </div>
@@ -333,5 +357,29 @@
   </div>
 
   <script src="app.js"></script>
+
+  <!-- Modal de Comparación -->
+  <div id="compareModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🔄 Comparar Configuración</h2>
+        <button class="modal-close" id="closeCompareModal">&times;</button>
+      </div>
+      <div class="compare-container">
+        <div class="compare-column">
+          <h3>Antes (Original)</h3>
+          <div id="beforeConfig" class="compare-config"></div>
+        </div>
+        <div class="compare-divider">→</div>
+        <div class="compare-column">
+          <h3>Después (Actual)</h3>
+          <div id="afterConfig" class="compare-config"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="closeCompareBtn" class="btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

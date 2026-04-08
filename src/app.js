@@ -1,4 +1,7 @@
 let currentConfig = {};
+let configHistory = [];
+let historyIndex = -1;
+const MAX_HISTORY = 20;
 
 // Elementos de navegación
 const dashboardView = document.getElementById('dashboardView');
@@ -7,6 +10,16 @@ const settingsBtn = document.getElementById('settingsBtn');
 const backBtn = document.getElementById('backBtn');
 const dashboardTitle = document.getElementById('dashboardTitle');
 const dashboardIcon = document.getElementById('dashboardIcon');
+
+// Elementos de comparación
+const compareBtn = document.getElementById('compareBtn');
+const compareModal = document.getElementById('compareModal');
+const closeCompareModal = document.getElementById('closeCompareModal');
+const closeCompareBtn = document.getElementById('closeCompareBtn');
+const beforeConfig = document.getElementById('beforeConfig');
+const afterConfig = document.getElementById('afterConfig');
+
+let originalConfig = {};
 
 // Elementos del DOM para configuración
 const appNameInput = document.getElementById('appName');
@@ -45,6 +58,120 @@ const exportBtn = document.getElementById('exportBtn');
 const appPreview = document.getElementById('appPreview');
 const configDisplay = document.getElementById('configDisplay');
 
+// Temas preestablecidos
+const THEMES = {
+  dark: {
+    appName: 'UI Customizer',
+    bgColor: '#1a1a1a',
+    textColor: '#ffffff',
+    accentColor: '#00bfff',
+    fontSize: 16,
+    borderRadius: 8,
+    iconPath: '📎',
+    emojiIngresos: '💰',
+    emojiOrdenes: '📦',
+    emojiClientes: '👥',
+    emojiCrecimiento: '📈',
+    chartColor: '#00bfff',
+    barColor: '#4ade80',
+    statusCompletedColor: '#4ade80',
+    statusPendingColor: '#ffc107',
+    statusProcessingColor: '#00bfff'
+  },
+  light: {
+    appName: 'UI Customizer',
+    bgColor: '#ffffff',
+    textColor: '#1a1a1a',
+    accentColor: '#0074d9',
+    fontSize: 16,
+    borderRadius: 8,
+    iconPath: '✨',
+    emojiIngresos: '💰',
+    emojiOrdenes: '📦',
+    emojiClientes: '👥',
+    emojiCrecimiento: '📈',
+    chartColor: '#0074d9',
+    barColor: '#2ecc40',
+    statusCompletedColor: '#2ecc40',
+    statusPendingColor: '#ff851b',
+    statusProcessingColor: '#0074d9'
+  },
+  corporate: {
+    appName: 'Business Dashboard',
+    bgColor: '#001f3f',
+    textColor: '#ffffff',
+    accentColor: '#0074d9',
+    fontSize: 14,
+    borderRadius: 4,
+    iconPath: '💼',
+    emojiIngresos: '💵',
+    emojiOrdenes: '📋',
+    emojiClientes: '👔',
+    emojiCrecimiento: '📈',
+    chartColor: '#0074d9',
+    barColor: '#2ecc40',
+    statusCompletedColor: '#2ecc40',
+    statusPendingColor: '#ff851b',
+    statusProcessingColor: '#0074d9'
+  },
+  modern: {
+    appName: 'Modern App',
+    bgColor: '#0d1117',
+    textColor: '#c9d1d9',
+    accentColor: '#58a6ff',
+    fontSize: 16,
+    borderRadius: 12,
+    iconPath: '🚀',
+    emojiIngresos: '💳',
+    emojiOrdenes: '🎁',
+    emojiClientes: '🌟',
+    emojiCrecimiento: '⬆️',
+    chartColor: '#58a6ff',
+    barColor: '#3fb950',
+    statusCompletedColor: '#3fb950',
+    statusPendingColor: '#d29922',
+    statusProcessingColor: '#58a6ff'
+  }
+};
+
+// ========== FUNCIONES DE COMPARACIÓN ==========
+
+function showCompareModal() {
+  if (!originalConfig || Object.keys(originalConfig).length === 0) {
+    originalConfig = JSON.parse(JSON.stringify(configHistory[0]));
+  }
+
+  const formatConfig = (config) => {
+    return Object.entries(config)
+      .map(([key, value]) => {
+        if (key === 'iconImage') return `${key}: [image data]`;
+        return `${key}: ${typeof value === 'string' ? `"${value}"` : value}`;
+      })
+      .join('\n');
+  };
+
+  beforeConfig.textContent = formatConfig(originalConfig);
+  afterConfig.textContent = formatConfig(currentConfig);
+
+  compareModal.classList.add('active');
+}
+
+function closeModal() {
+  compareModal.classList.remove('active');
+}
+
+// Event listeners para modal
+if (compareBtn) compareBtn.addEventListener('click', showCompareModal);
+if (closeCompareModal) closeCompareModal.addEventListener('click', closeModal);
+if (closeCompareBtn) closeCompareBtn.addEventListener('click', closeModal);
+
+// Cerrar modal al hacer clic fuera
+if (compareModal) {
+  compareModal.addEventListener('click', (e) => {
+    if (e.target === compareModal) closeModal();
+  });
+}
+
 // ========== FUNCIONES DE NAVEGACIÓN ==========
 
 function showDashboard() {
@@ -61,15 +188,129 @@ function showSettings() {
 settingsBtn.addEventListener('click', showSettings);
 backBtn.addEventListener('click', showDashboard);
 
+// ========== FUNCIONES DE HISTORIAL ==========
+
+function addToHistory(config) {
+  // Remove redo history if we're adding a new change
+  if (historyIndex < configHistory.length - 1) {
+    configHistory = configHistory.slice(0, historyIndex + 1);
+  }
+
+  configHistory.push(JSON.parse(JSON.stringify(config)));
+  historyIndex++;
+
+  // Limit history size
+  if (configHistory.length > MAX_HISTORY) {
+    configHistory.shift();
+    historyIndex--;
+  }
+
+  updateHistoryButtons();
+}
+
+function undo() {
+  if (historyIndex > 0) {
+    historyIndex--;
+    currentConfig = JSON.parse(JSON.stringify(configHistory[historyIndex]));
+    updateAllControls();
+    updatePreview();
+    updateDashboard();
+    updateHistoryButtons();
+  }
+}
+
+function redo() {
+  if (historyIndex < configHistory.length - 1) {
+    historyIndex++;
+    currentConfig = JSON.parse(JSON.stringify(configHistory[historyIndex]));
+    updateAllControls();
+    updatePreview();
+    updateDashboard();
+    updateHistoryButtons();
+  }
+}
+
+function updateHistoryButtons() {
+  const undoBtn = document.getElementById('undoBtn');
+  const redoBtn = document.getElementById('redoBtn');
+
+  if (undoBtn) undoBtn.disabled = historyIndex <= 0;
+  if (redoBtn) redoBtn.disabled = historyIndex >= configHistory.length - 1;
+}
+
+// ========== FUNCIONES DE TEMAS ==========
+
+function applyTheme(themeName) {
+  const theme = THEMES[themeName];
+  if (theme) {
+    currentConfig = { ...currentConfig, ...theme };
+    addToHistory(currentConfig);
+    updateAllControls();
+    updatePreview();
+    updateDashboard();
+    saveConfig();
+  }
+}
+
+// ========== FUNCIONES DE VALIDACIÓN ==========
+
+function getContrastRatio(hex1, hex2) {
+  const getLuminance = (hex) => {
+    const rgb = parseInt(hex.slice(1), 16);
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = (rgb >> 0) & 0xff;
+
+    const [rs, gs, bs] = [r, g, b].map(x => {
+      x = x / 255;
+      return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+    });
+
+    return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+  };
+
+  const l1 = getLuminance(hex1);
+  const l2 = getLuminance(hex2);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function validateContrast() {
+  const ratio = getContrastRatio(currentConfig.bgColor, currentConfig.textColor);
+  const contrastBadge = document.getElementById('contrastBadge');
+
+  if (!contrastBadge) return;
+
+  if (ratio >= 7) {
+    contrastBadge.className = 'contrast-badge excellent';
+    contrastBadge.textContent = '✓ Contraste Excelente (' + ratio.toFixed(1) + ':1)';
+    contrastBadge.style.display = 'inline-block';
+  } else if (ratio >= 4.5) {
+    contrastBadge.className = 'contrast-badge good';
+    contrastBadge.textContent = '✓ Contraste Bueno (' + ratio.toFixed(1) + ':1)';
+    contrastBadge.style.display = 'inline-block';
+  } else {
+    contrastBadge.className = 'contrast-badge warning';
+    contrastBadge.textContent = '⚠️ Contraste Bajo (' + ratio.toFixed(1) + ':1) - Mejora legibilidad';
+    contrastBadge.style.display = 'inline-block';
+  }
+}
+
 // ========== FUNCIONES DE CONFIGURACIÓN ==========
 
 // Cargar configuración inicial
 async function loadConfig() {
   try {
     currentConfig = await window.electronAPI.getConfig();
+    originalConfig = JSON.parse(JSON.stringify(currentConfig));
+    configHistory = [JSON.parse(JSON.stringify(currentConfig))];
+    historyIndex = 0;
     updateAllControls();
     updatePreview();
     updateDashboard();
+    validateContrast();
   } catch (error) {
     console.error('Error loading config:', error);
   }
@@ -274,6 +515,7 @@ function updatePreview() {
 
   // Actualizar info de configuración
   updateConfigDisplay();
+  validateContrast();
 }
 
 // Mostrar configuración actual
@@ -314,6 +556,7 @@ iconImageInput.addEventListener('change', (e) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       currentConfig.iconImage = event.target.result;
+      addToHistory(currentConfig);
       updateAllControls();
       updatePreview();
       updateDashboard();
@@ -326,6 +569,7 @@ iconImageInput.addEventListener('change', (e) => {
 bgColorInput.addEventListener('change', (e) => {
   currentConfig.bgColor = e.target.value;
   bgColorText.value = e.target.value;
+  addToHistory(currentConfig);
   updatePreview();
   updateDashboard();
   saveConfig();
@@ -335,6 +579,7 @@ bgColorText.addEventListener('change', (e) => {
   if (isValidColor(e.target.value)) {
     currentConfig.bgColor = e.target.value;
     bgColorInput.value = e.target.value;
+    addToHistory(currentConfig);
     updatePreview();
     updateDashboard();
     saveConfig();
@@ -344,6 +589,7 @@ bgColorText.addEventListener('change', (e) => {
 textColorInput.addEventListener('change', (e) => {
   currentConfig.textColor = e.target.value;
   textColorText.value = e.target.value;
+  addToHistory(currentConfig);
   updatePreview();
   updateDashboard();
   saveConfig();
@@ -353,6 +599,7 @@ textColorText.addEventListener('change', (e) => {
   if (isValidColor(e.target.value)) {
     currentConfig.textColor = e.target.value;
     textColorInput.value = e.target.value;
+    addToHistory(currentConfig);
     updatePreview();
     updateDashboard();
     saveConfig();
@@ -362,6 +609,7 @@ textColorText.addEventListener('change', (e) => {
 accentColorInput.addEventListener('change', (e) => {
   currentConfig.accentColor = e.target.value;
   accentColorText.value = e.target.value;
+  addToHistory(currentConfig);
   updatePreview();
   updateDashboard();
   saveConfig();
@@ -371,6 +619,7 @@ accentColorText.addEventListener('change', (e) => {
   if (isValidColor(e.target.value)) {
     currentConfig.accentColor = e.target.value;
     accentColorInput.value = e.target.value;
+    addToHistory(currentConfig);
     updatePreview();
     updateDashboard();
     saveConfig();
@@ -538,6 +787,8 @@ statusProcessingColorText.addEventListener('change', (e) => {
 resetBtn.addEventListener('click', async () => {
   if (confirm('¿Deseas restablecer la configuración por defecto?')) {
     currentConfig = await window.electronAPI.resetConfig();
+    configHistory = [JSON.parse(JSON.stringify(currentConfig))];
+    historyIndex = 0;
     updateAllControls();
     updatePreview();
     updateDashboard();
@@ -554,6 +805,20 @@ exportBtn.addEventListener('click', () => {
   a.click();
   URL.revokeObjectURL(url);
 });
+
+// Botones de temas
+document.querySelectorAll('[data-theme]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    applyTheme(e.target.dataset.theme);
+  });
+});
+
+// Botones de undo/redo
+const undoBtn = document.getElementById('undoBtn');
+const redoBtn = document.getElementById('redoBtn');
+
+if (undoBtn) undoBtn.addEventListener('click', undo);
+if (redoBtn) redoBtn.addEventListener('click', redo);
 
 // Función auxiliar para validar colores
 function isValidColor(color) {

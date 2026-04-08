@@ -9,13 +9,19 @@ Una aplicación de escritorio para Windows que permite personalizar completament
 - ✅ Persistencia automática en `config.json`
 - ✅ Fácil exportación de configuraciones personalizadas
 - ✅ Interfaz intuitiva para clientes finales
+- ✅ Temas preestablecidos (Dark, Light, Corporate, Modern)
+- ✅ Historial de cambios (Undo/Redo)
+- ✅ Validación de accesibilidad (contraste de colores)
+- ✅ Comparación antes/después de cambios
 
 ### 🖼️ Dashboard Personalizable
 - 📊 Dashboard simulado con estadísticas
 - 🎨 Colores completamente customizables
 - 🔤 Tamaño de fuente ajustable
 - 🎭 Emojis/iconos editables
+- 📈 Gráficos con colores personalizados
 - 🎯 Vista previa en tiempo real
+- 📊 Barras de estado personalizables
 
 ### ⚙️ Panel de Configuración Completo
 - Información de la app (nombre, icono, imagen)
@@ -26,6 +32,31 @@ Una aplicación de escritorio para Windows que permite personalizar completament
   - Color de gráficos
   - Color de barras de categorías
   - Colores de estados (Completada, Pendiente, Procesando)
+
+### 🚀 Características Avanzadas
+
+#### 1. **Temas Preestablecidos** 🎨
+4 temas listos para usar con un solo clic:
+- 🌙 **Dark**: Tema oscuro profesional (por defecto)
+- ☀️ **Light**: Tema claro minimalista
+- 💼 **Corporate**: Tema corporativo azul
+- 🚀 **Modern**: Tema moderno estilo GitHub
+
+#### 2. **Historial de Cambios** 🔄
+- Botones Deshacer/Rehacer
+- Hasta 20 cambios en historial
+- Navegación rápida entre versiones
+- Sin pérdida de datos
+
+#### 3. **Comparación Antes/Después** 🔀
+- Modal visual comparando configuración original vs actual
+- Muestra todos los parámetros lado a lado
+- Ayuda a visualizar el impacto de los cambios
+
+#### 4. **Validación de Accesibilidad** ✓
+- Verifica contraste entre fondo y texto
+- Niveles: Excelente ≥7:1, Bueno ≥4.5:1, Bajo <4.5:1
+- Aviso automático si el contraste es insuficiente
 
 ## 🚀 Instalación y Ejecución
 
@@ -66,6 +97,7 @@ Prueba app modificable/
 ├── preload.js               # Puente de comunicación segura
 ├── package.json             # Configuración del proyecto
 ├── config.json              # Archivo de propiedades (persistente)
+├── config.example.json      # Ejemplo de configuración
 ├── install.bat              # Instalador rápido (Windows)
 ├── start.bat                # Ejecutar rápido (Windows)
 ├── README.md                # Este archivo
@@ -73,7 +105,7 @@ Prueba app modificable/
 ├── .gitignore               # Configuración git
 └── src/
     ├── index.html           # Interfaz (Dashboard + Settings)
-    ├── styles.css           # Estilos (900+ líneas)
+    ├── styles.css           # Estilos (1000+ líneas)
     └── app.js               # Lógica de personalización
 ```
 
@@ -146,32 +178,49 @@ La app abre mostrando un dashboard de ventas simulado con:
 
 ### ⚙️ Vista Configuración
 
-#### 1️⃣ **Información de la App**
+#### 1️⃣ **Temas Preestablecidos**
+- 4 botones para temas listos: Dark, Light, Corporate, Modern
+- Cambio instantáneo de toda la paleta de colores
+- Perfecto para pruebas rápidas
+
+#### 2️⃣ **Control de Cambios**
+- **Deshacer (↶)**: Revierte al estado anterior
+- **Rehacer (↷)**: Avanza al estado siguiente
+- Historial de hasta 20 cambios
+- Botones deshabilitados cuando no hay acciones
+
+#### 3️⃣ **Validación de Accesibilidad**
+- Badge que muestra el ratio de contraste
+- Colores: Verde (excelente), Azul (bueno), Rojo (advertencia)
+- Ayuda a crear interfaces accesibles
+
+#### 4️⃣ **Información de la App**
 - Cambia el nombre de la aplicación
 - Selecciona emoji o sube una imagen (JPG, PNG, ICO)
 - Los cambios aparecen instantáneamente
 
-#### 2️⃣ **Colores Generales**
+#### 5️⃣ **Colores Generales**
 - Selector de color o código hexadecimal
 - Cambios sincronizan entre selector y campo de texto
 - Se aplican a toda la interfaz
 
-#### 3️⃣ **Estilos**
+#### 6️⃣ **Estilos**
 - **Tamaño de Fuente**: Desliza de 12px a 24px
 - **Radio de Borde**: Desliza de 0px a 20px
 
-#### 4️⃣ **Personalización del Dashboard**
+#### 7️⃣ **Personalización del Dashboard**
 - **Emojis de Estadísticas**: Cambia los 4 emojis de las tarjetas
 - **Color de Gráfica**: Define el color de las líneas del gráfico
 - **Color de Barras**: Define el color de las barras de categorías
 - **Colores de Estados**: Personaliza los 3 colores de status
 
-#### 5️⃣ **Vista Previa**
+#### 8️⃣ **Vista Previa**
 - **Lado derecho**: Preview en vivo de cómo se vería
 - **Panel JSON**: Muestra la configuración actual en tiempo real
 
-#### 6️⃣ **Botones de Acción**
+#### 9️⃣ **Botones de Acción**
 - **🔄 Restablecer**: Vuelve a valores por defecto
+- **🔄 Comparar**: Abre modal comparando antes/después
 - **💾 Exportar Config**: Descarga JSON con la configuración actual
 
 ### 🔄 Navegación
@@ -206,11 +255,12 @@ Preview (refleja cambios)
 
 1. Cliente recibe la app
 2. Abre "Configuración"
-3. Cambia nombre, colores y iconos con su branding
-4. Personaliza el dashboard a su gusto
-5. Exporta su `config.json`
-6. Comparte la app con su `config.json` personalizado
-7. ¡Parece una app completamente nueva!
+3. Selecciona un tema preestablecido o personaliza manualmente
+4. Usa Undo/Redo para experimentar sin miedo
+5. Compara antes/después para ver cambios
+6. Verifica accesibilidad con validación de contraste
+7. Exporta su `config.json`
+8. ¡Parece una app completamente nueva!
 
 ## 🔧 Modo Desarrollo
 
@@ -231,13 +281,14 @@ Abre automáticamente la consola de Electron.
 | Los cambios no se guardan | Verifica permisos de escritura en la carpeta |
 | Colores inválidos | Usa formato hexadecimal: `#RRGGBB` |
 | Imagen no carga | Usa JPG, PNG o ICO (máx 2MB) |
+| Botones Undo/Redo deshabilitados | No hay historial de cambios aún |
 
 ## 📦 Dependencias
 
 - **Electron** (latest): Framework para apps de escritorio
 - **Node.js** (v12+): Entorno de ejecución (requerido)
 
-## 🎨 Ejemplo: Temas Personalizados
+## 🎨 Ejemplos: Temas Personalizados
 
 ### Tema Corporativo Azul
 ```json
@@ -260,6 +311,17 @@ Abre automáticamente la consola de Electron.
 }
 ```
 
+### Tema Pastel Suave
+```json
+{
+  "bgColor": "#fff5f7",
+  "textColor": "#2c3e50",
+  "accentColor": "#e74c3c",
+  "statusCompletedColor": "#27ae60",
+  "statusPendingColor": "#f39c12"
+}
+```
+
 ## 📝 Notas Importantes
 
 - 🖥️ **Windows**: Optimizado para Windows 11/10
@@ -267,16 +329,17 @@ Abre automáticamente la consola de Electron.
 - 📱 **Responsive**: Interfaz adaptable
 - 🎭 **Dark Theme**: Tema oscuro profesional por defecto
 - 🚀 **Sin instalación compleja**: Solo Node.js es requerido
+- 🔒 **Archivos Git**: `config.json` está en `.gitignore` para no subir configs personalizadas
 
 ## 🎯 Características Futuras
 
-- [ ] Múltiples perfiles de configuración
-- [ ] Importar configuración desde archivo
-- [ ] Tema claro/oscuro automático
+- [ ] Múltiples perfiles de configuración guardados
+- [ ] Importar configuración desde archivo JSON
+- [ ] Tema claro/oscuro automático según Sistema Operativo
 - [ ] Animaciones personalizables
-- [ ] Fuentes personalizadas
-- [ ] Versión web
-- [ ] Sincronización en la nube
+- [ ] Selector de fuentes personalizadas
+- [ ] Versión web con sincronización en la nube
+- [ ] Exportar como imagen PNG del dashboard
 
 ## 📄 Licencia
 
