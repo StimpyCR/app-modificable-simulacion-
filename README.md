@@ -1,24 +1,37 @@
-# 🎨 UI Customizer - Aplicación Desktop Personalizable
+# 🎨 UI Customizer - Aplicación Desktop White Label
 
-Una aplicación de escritorio para Windows que permite personalizar completamente la interfaz en tiempo real. Cambia colores, tamaños de fuente, iconos y más sin necesidad de reiniciar.
+Una aplicación de escritorio para Windows que permite personalizar completamente la interfaz en tiempo real. Diseñada como **solución White Label** para que cada cliente adapte la app a su marca y identidad visual.
 
-## 📋 Características
+## ✨ Características Principales
 
-✅ **Cambios en Tiempo Real** - Todos los ajustes se aplican instantáneamente
-✅ **Personalización Completa** - Colores, fuentes, iconos y estilos
-✅ **Persistencia** - Los cambios se guardan automáticamente en `config.json`
-✅ **Vista Previa** - Visualiza los cambios mientras los realizas
-✅ **Exportar Configuración** - Descarga tu configuración personalizada
-✅ **Restablecer Valores** - Vuelve a los valores por defecto fácilmente
+### 🎯 White Label (Personalización Total)
+- ✅ Cambios en tiempo real sin necesidad de reiniciar
+- ✅ Persistencia automática en `config.json`
+- ✅ Fácil exportación de configuraciones personalizadas
+- ✅ Interfaz intuitiva para clientes finales
+
+### 🖼️ Dashboard Personalizable
+- 📊 Dashboard simulado con estadísticas
+- 🎨 Colores completamente customizables
+- 🔤 Tamaño de fuente ajustable
+- 🎭 Emojis/iconos editables
+- 🎯 Vista previa en tiempo real
+
+### ⚙️ Panel de Configuración Completo
+- Información de la app (nombre, icono, imagen)
+- Personalización de colores (fondo, texto, acentos)
+- Estilos (tamaño fuente, radio de bordes)
+- **Personalización visual del dashboard:**
+  - Emojis de estadísticas (Ingresos, Órdenes, Clientes, Crecimiento)
+  - Color de gráficos
+  - Color de barras de categorías
+  - Colores de estados (Completada, Pendiente, Procesando)
 
 ## 🚀 Instalación y Ejecución
 
 ### Opción 1: Con VS Code (Recomendado)
 
-1. **Abre la carpeta del proyecto en VS Code**
-   ```bash
-   Abre VS Code y carga la carpeta del proyecto
-   ```
+1. **Abre VS Code y carga la carpeta del proyecto**
 
 2. **Abre la terminal integrada** (Ctrl + `)
 
@@ -32,45 +45,39 @@ Una aplicación de escritorio para Windows que permite personalizar completament
    npm start
    ```
 
-¡Listo! La app debería abrirse automáticamente.
+### Opción 2: Doble-clic en Windows
 
-### Opción 2: Desde Línea de Comandos
+1. **Doble-clic en `install.bat`** - Instala Electron
+2. **Doble-clic en `start.bat`** - Ejecuta la app
 
-1. **Abre una terminal** (PowerShell o CMD)
+### Opción 3: Desde Línea de Comandos
 
-2. **Navega a la carpeta del proyecto**
-   ```bash
-   cd "tu-ruta-a-la-carpeta"
-   ```
-
-3. **Instala dependencias**
-   ```bash
-   npm install
-   ```
-
-4. **Ejecuta la app**
-   ```bash
-   npm start
-   ```
+```bash
+cd "tu-ruta-a-la-carpeta"
+npm install
+npm start
+```
 
 ## 📁 Estructura del Proyecto
 
 ```
 Prueba app modificable/
-├── main.js              # Proceso principal de Electron
-├── preload.js           # Puente de comunicación segura
-├── package.json         # Configuración del proyecto
-├── config.json          # Archivo de propiedades personalizable
-├── src/
-│   ├── index.html       # Interfaz principal
-│   ├── styles.css       # Estilos de la app
-│   └── app.js          # Lógica de la aplicación
-└── README.md           # Este archivo
+├── main.js                  # Proceso principal de Electron
+├── preload.js               # Puente de comunicación segura
+├── package.json             # Configuración del proyecto
+├── config.json              # Archivo de propiedades (persistente)
+├── install.bat              # Instalador rápido (Windows)
+├── start.bat                # Ejecutar rápido (Windows)
+├── README.md                # Este archivo
+├── QUICKSTART.md            # Guía rápida
+├── .gitignore               # Configuración git
+└── src/
+    ├── index.html           # Interfaz (Dashboard + Settings)
+    ├── styles.css           # Estilos (900+ líneas)
+    └── app.js               # Lógica de personalización
 ```
 
 ## ⚙️ Archivo de Configuración (config.json)
-
-El archivo `config.json` contiene todas las propiedades personalizables:
 
 ```json
 {
@@ -80,120 +87,196 @@ El archivo `config.json` contiene todas las propiedades personalizables:
   "accentColor": "#00bfff",
   "fontSize": 16,
   "borderRadius": 8,
-  "iconPath": "📎"
+  "iconPath": "📎",
+  "iconImage": null,
+  "emojiIngresos": "💰",
+  "emojiOrdenes": "📦",
+  "emojiClientes": "👥",
+  "emojiCrecimiento": "📈",
+  "chartColor": "#00bfff",
+  "barColor": "#4ade80",
+  "statusCompletedColor": "#4ade80",
+  "statusPendingColor": "#ffc107",
+  "statusProcessingColor": "#00bfff"
 }
 ```
 
-### Parámetros Personalizables:
+## 📋 Parámetros Personalizables
+
+### 📱 Información de la App
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `appName` | string | Nombre mostrado de la aplicación |
+| `iconPath` | emoji | Emoji o símbolo a mostrar |
+| `iconImage` | base64 | Imagen (JPG, PNG, ICO) codificada |
+
+### 🎨 Estilos Generales
 
 | Parámetro | Tipo | Rango | Descripción |
 |-----------|------|-------|-------------|
-| `appName` | string | - | Nombre mostrado de la aplicación |
-| `bgColor` | hex color | #000000 - #FFFFFF | Color de fondo principal |
-| `textColor` | hex color | #000000 - #FFFFFF | Color del texto |
-| `accentColor` | hex color | #000000 - #FFFFFF | Color de los acentos (bordes, iconos) |
-| `fontSize` | number | 12 - 24 | Tamaño de fuente en píxeles |
-| `borderRadius` | number | 0 - 20 | Radio de los bordes en píxeles |
-| `iconPath` | string | emoji/símbolo | Emoji o símbolo a mostrar |
+| `bgColor` | hex | #000000 - #FFFFFF | Color de fondo principal |
+| `textColor` | hex | #000000 - #FFFFFF | Color del texto |
+| `accentColor` | hex | #000000 - #FFFFFF | Color de acentos |
+| `fontSize` | number | 12 - 24 px | Tamaño de fuente |
+| `borderRadius` | number | 0 - 20 px | Radio de bordes |
+
+### 📊 Personalización del Dashboard
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `emojiIngresos` | emoji | Emoji tarjeta "Ingresos" |
+| `emojiOrdenes` | emoji | Emoji tarjeta "Órdenes" |
+| `emojiClientes` | emoji | Emoji tarjeta "Clientes" |
+| `emojiCrecimiento` | emoji | Emoji tarjeta "Crecimiento" |
+| `chartColor` | hex | Color de la gráfica |
+| `barColor` | hex | Color de las barras de categorías |
+| `statusCompletedColor` | hex | Color status "Completada" |
+| `statusPendingColor` | hex | Color status "Pendiente" |
+| `statusProcessingColor` | hex | Color status "Procesando" |
 
 ## 🎮 Cómo Usar la App
 
-### Panel de Control (Lado Izquierdo)
+### 🏠 Vista Dashboard
+La app abre mostrando un dashboard de ventas simulado con:
+- Tarjetas de estadísticas personalizables
+- Gráficos de ventas
+- Tabla de órdenes recientes
+- Botón **⚙️ Configuración** para acceder al panel de control
 
-1. **Información de la App**
-   - Cambia el nombre y el emoji/icono
-   - Los cambios aparecen en la vista previa instantáneamente
+### ⚙️ Vista Configuración
 
-2. **Colores**
-   - Usa el selector de color o escribe el código hexadecimal
-   - Puedes alternar entre el selector visual y el código hex
+#### 1️⃣ **Información de la App**
+- Cambia el nombre de la aplicación
+- Selecciona emoji o sube una imagen (JPG, PNG, ICO)
+- Los cambios aparecen instantáneamente
 
-3. **Estilos**
-   - **Tamaño de Fuente**: Desliza para cambiar de 12px a 24px
-   - **Radio de Borde**: Desliza para cambiar de 0px a 20px
+#### 2️⃣ **Colores Generales**
+- Selector de color o código hexadecimal
+- Cambios sincronizan entre selector y campo de texto
+- Se aplican a toda la interfaz
 
-4. **Botones de Acción**
-   - **🔄 Restablecer**: Vuelve a la configuración por defecto
-   - **💾 Exportar Config**: Descarga tu configuración actual como JSON
+#### 3️⃣ **Estilos**
+- **Tamaño de Fuente**: Desliza de 12px a 24px
+- **Radio de Borde**: Desliza de 0px a 20px
 
-### Vista Previa (Lado Derecho)
+#### 4️⃣ **Personalización del Dashboard**
+- **Emojis de Estadísticas**: Cambia los 4 emojis de las tarjetas
+- **Color de Gráfica**: Define el color de las líneas del gráfico
+- **Color de Barras**: Define el color de las barras de categorías
+- **Colores de Estados**: Personaliza los 3 colores de status
 
-- Visualiza en tiempo real cómo se verá tu aplicación personalizada
-- Incluye ejemplos de tarjetas (cards) que muestran diferentes secciones
-- Muestra la configuración actual en formato JSON
+#### 5️⃣ **Vista Previa**
+- **Lado derecho**: Preview en vivo de cómo se vería
+- **Panel JSON**: Muestra la configuración actual en tiempo real
+
+#### 6️⃣ **Botones de Acción**
+- **🔄 Restablecer**: Vuelve a valores por defecto
+- **💾 Exportar Config**: Descarga JSON con la configuración actual
+
+### 🔄 Navegación
+- **Dashboard → Configuración**: Clic en botón "⚙️ Configuración"
+- **Configuración → Dashboard**: Clic en botón "← Volver al Dashboard"
 
 ## 💾 Persistencia de Datos
 
-- Todos los cambios se guardan **automáticamente** en `config.json`
-- La configuración se mantiene incluso después de cerrar la app
-- Si eliminas `config.json`, la app cargará los valores por defecto
+✅ **Todos los cambios se guardan automáticamente** en `config.json`
+✅ **Las configuraciones persisten** al cerrar y reabrir la app
+✅ **Si eliminas `config.json`**, se cargarán los valores por defecto
 
-## 🔧 Parámetros Personalizables en Tiempo Real
+## 🔄 Cambios en Tiempo Real
 
-La app permite cambiar en VIVO:
+La app sincroniza instantáneamente entre:
 
-✅ Nombre de la aplicación
-✅ Icono/Emoji (cualquier emoji Unicode)
-✅ Color de fondo
-✅ Color de texto
-✅ Color de acento
-✅ Tamaño de fuente
-✅ Radio de los bordes
+```
+Panel de Control
+     ↓
+  Config JSON (guardado automático)
+     ↓
+Dashboard (actualización visual)
+     ↓
+Preview (refleja cambios)
+```
 
-Todos estos cambios se sincronizan instantáneamente en:
-- Panel de control
-- Vista previa
-- Archivo de configuración (`config.json`)
+**Todos sin necesidad de recargar o reiniciar.**
 
-## 🔄 Modo Desarrollo
+## 🎯 Caso de Uso: White Label
 
-Si quieres abrir las herramientas de desarrollador:
+**Flujo típico para un cliente:**
+
+1. Cliente recibe la app
+2. Abre "Configuración"
+3. Cambia nombre, colores y iconos con su branding
+4. Personaliza el dashboard a su gusto
+5. Exporta su `config.json`
+6. Comparte la app con su `config.json` personalizado
+7. ¡Parece una app completamente nueva!
+
+## 🔧 Modo Desarrollo
+
+Para abrir las herramientas de desarrollador:
 
 ```bash
 npm run dev
 ```
 
-Esto abrirá automáticamente la consola del desarrollador de Electron.
-
-## 📝 Notas Importantes
-
-- **Node.js es requerido**: La app necesita Node.js para funcionar
-- **Windows**: Optimizado para Windows, aunque debería funcionar en macOS y Linux
-- **Cambios en tiempo real**: Las actualizaciones son instantáneas sin necesidad de recargar
-- **Archivos generados**: El archivo `config.json` se crea/actualiza automáticamente
+Abre automáticamente la consola de Electron.
 
 ## 🐛 Troubleshooting
 
-### "npm: command not found"
-- Node.js no está instalado correctamente
-- Instala Node.js desde https://nodejs.org/
-
-### App no abre
-- Asegúrate de tener Node.js v12 o superior
-- Ejecuta `npm install` nuevamente
-- Elimina la carpeta `node_modules` y ejecuta `npm install`
-
-### Los cambios no se guardan
-- Verifica que tengas permisos de escritura en la carpeta
-- Asegúrate de que `config.json` no está marcado como "solo lectura"
-
-### Problemas de color
-- Usa formato hexadecimal válido: `#RRGGBB` (ej: #FF0000)
-- Los colores se sincronizan automáticamente entre el selector y el campo de texto
+| Problema | Solución |
+|----------|----------|
+| "npm: command not found" | Instala Node.js desde https://nodejs.org/ |
+| App no abre | Ejecuta `npm install` nuevamente |
+| Los cambios no se guardan | Verifica permisos de escritura en la carpeta |
+| Colores inválidos | Usa formato hexadecimal: `#RRGGBB` |
+| Imagen no carga | Usa JPG, PNG o ICO (máx 2MB) |
 
 ## 📦 Dependencias
 
-- **Electron** (v latest): Framework para crear aplicaciones de escritorio
-- **Node.js**: Entorno de ejecución (requerido)
+- **Electron** (latest): Framework para apps de escritorio
+- **Node.js** (v12+): Entorno de ejecución (requerido)
 
-## 🎯 Próximas Mejoras (Sugerencias)
+## 🎨 Ejemplo: Temas Personalizados
 
-- [ ] Guardar múltiples perfiles de configuración
+### Tema Corporativo Azul
+```json
+{
+  "bgColor": "#001f3f",
+  "textColor": "#ffffff",
+  "accentColor": "#0074d9",
+  "statusCompletedColor": "#2ecc40",
+  "statusPendingColor": "#ff851b"
+}
+```
+
+### Tema Moderno Verde
+```json
+{
+  "bgColor": "#0d1117",
+  "textColor": "#c9d1d9",
+  "accentColor": "#58a6ff",
+  "statusCompletedColor": "#3fb950"
+}
+```
+
+## 📝 Notas Importantes
+
+- 🖥️ **Windows**: Optimizado para Windows 11/10
+- 🔄 **Actualizaciones**: Los cambios se sincronizan instantáneamente
+- 📱 **Responsive**: Interfaz adaptable
+- 🎭 **Dark Theme**: Tema oscuro profesional por defecto
+- 🚀 **Sin instalación compleja**: Solo Node.js es requerido
+
+## 🎯 Características Futuras
+
+- [ ] Múltiples perfiles de configuración
 - [ ] Importar configuración desde archivo
 - [ ] Tema claro/oscuro automático
 - [ ] Animaciones personalizables
 - [ ] Fuentes personalizadas
 - [ ] Versión web
+- [ ] Sincronización en la nube
 
 ## 📄 Licencia
 
@@ -201,4 +284,6 @@ MIT
 
 ---
 
-**¿Preguntas o sugerencias?** Puedes modificar directamente los archivos para experimentar con diferentes configuraciones.
+**¿Preguntas o problemas?** Todos los estilos y configuraciones pueden modificarse directamente en los archivos para experimentar.
+
+**Hecho con ❤️ como solución White Label customizable**
